@@ -46,7 +46,24 @@ function App() {
       if (resp.status === 200) {
         getTasks();
       } else {
-        throw new Error('task can not be added');
+        throw new Error('task can not be deleted');
+      }
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  };
+
+  const changeTaskState = async (id) => {
+    try {
+      const task = todoList.find((item) => item._id === id);
+      const resp = await api.put(`/tasks/${id}`, {
+        isComplete: !task.isComplete,
+      });
+
+      if (resp.status === 200) {
+        getTasks();
+      } else {
+        throw new Error('task state can not be changed');
       }
     } catch (error) {
       console.log('ERROR', error);
@@ -76,7 +93,11 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard todoList={todoList} deleteTask={deleteTask} />
+      <TodoBoard
+        todoList={todoList}
+        deleteTask={deleteTask}
+        changeTaskState={changeTaskState}
+      />
     </Container>
   );
 }
