@@ -39,6 +39,20 @@ function App() {
     }
   };
 
+  const deleteTask = async (id) => {
+    try {
+      const resp = await api.delete(`/tasks/${id}`);
+
+      if (resp.status === 200) {
+        getTasks();
+      } else {
+        throw new Error('task can not be added');
+      }
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  };
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -62,7 +76,7 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard todoList={todoList} />
+      <TodoBoard todoList={todoList} deleteTask={deleteTask} />
     </Container>
   );
 }
