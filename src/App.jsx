@@ -36,7 +36,7 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard />
+      <TodoBoard todoList={todoList} />
     </Container>
   );
 }
